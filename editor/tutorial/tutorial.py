@@ -298,3 +298,48 @@ non_null
 (1, 2) < (1, 2, -1)
 (1, 2, 3) == (1.0, 2.0, 3.0)
 (1, 2, ('aa', 'bb')) < (1, 2, ('aa', 'bb'), 4)
+
+# 6.Modeles
+# ライブラリのパスを追加する
+import sys
+# カレントディレクトリからのインポートは以下の様に書く
+from . import fibo
+fibo.fib(1000)
+fibo.fib2(100)
+fibo.__name__
+
+fib = fibo.fib
+fib(500)
+
+# 6.1.More on Modules
+from fibo import fib, fib2
+fib(500)
+from fibo import *
+fib(500)
+
+import fibo as fib
+fib.fib(500)
+
+from fibo import fib as fibonacci
+fibonacci(500)
+
+# 6.1.1.Executing modules as scripts
+
+# 6.2.Standard Modules
+import sys
+sys.ps1
+sys.ps2
+sys.ps1 = 'C> '
+print('Yuck!')
+
+# 6.3. The dir() Function
+import fibo, sys
+dir(fibo)
+dir(sys)
+a = [1,2,3,4,5]
+import fibo
+fib = fibo.fib
+dir()
+
+import builtins
+dir(builtins)
