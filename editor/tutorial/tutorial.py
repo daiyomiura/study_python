@@ -406,3 +406,53 @@ print('Jack: {Jack:d}; Sjoerd: {Sjoerd:d}; Dcab: {Dcab:d}'.format(**table))
 
 for x in range(1, 11):
     print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))
+
+# 7.1.3. Manual String Formatting
+for x in range(1, 11):
+    print(repr(x).rjust(2),repr(x*x).rjust(3), end=' ')
+    # Note use of 'end' on previous line
+    print(repr(x*x*x).rjust(4))
+
+'12'.zfill(5)
+'-3.14'.zfill(7)
+'-003.14'
+'3.14159265359'.zfill(5)
+
+# 7.1.4.Old string Formatting
+import math
+print('The value of pi is approximately %5.3f.' % math.pi)
+
+# 7.2. Reading and Writning FIles
+f = open('workfile', 'w')
+
+with open('workfile') as f:
+    read_data = f.read()
+f.closed
+
+f.close()
+f.read()
+
+# 7.2.1.Methods of File objects
+f = open('workfile', 'r')
+# f.read()
+# f.read()
+f.readline()
+f.readline()
+
+f = open('workfile', 'r')
+for line in f:
+    print(line, end = ' ')
+
+f = open('workfile', 'r+')
+f.write('This is a test\n')
+
+value = ('the answer', 42)
+s = str(value) # convert the tuple to string
+f.write(s)
+
+f = open('workfile','rb+')
+f.write(b'0123456789abcdef')
+f.seek(5)
+f.read(1)
+f.seek(-3, 2)
+f.read(1)
