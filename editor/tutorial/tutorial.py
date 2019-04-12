@@ -456,3 +456,47 @@ f.seek(5)
 f.read(1)
 f.seek(-3, 2)
 f.read(1)
+
+# 7.2.2. Saving structed data sith json
+import json
+json.dumps([1, 'simple', 'list'])
+
+dict = [1, 'simple', 'list']
+f = open('test.json', 'w')
+json.dump(dict, f, indent=1)
+
+# 8.Errors and Exceptions
+# 8.1.Syntax Errors
+while True print('Hello world')
+
+# 8.2. Exceptions
+10 / (1/0)
+4 + spam*3
+'2' + 2
+
+# 8.3.Handling Exceptions
+while True:
+    try:
+        x = int(input("Please enter a number: "))
+        break
+    except ValueError:
+        print("Oops! That was no valid number. Try again...")
+
+class B(Exception):
+    pass
+
+class C(B):
+    pass
+
+class D(C):
+    pass
+
+for cls in [B, C, D]:
+    try:
+        raise cls()
+    except D:
+        print("D")
+    except C:
+        print("C")
+    except B:
+        print("B")
