@@ -564,10 +564,57 @@ divide(2,1)
 divide(2,0)
 divide("2","1")
 
-#8.7. Predifined Clean-up Actions
+# 8.7. Predifined Clean-up Actions
 for line in open("myfile.txt"):
     print(line, end="")
 
 with open("myfile.txt") as f:
     for line in f:
         print(line, end="")
+
+# 9.Classes
+# 9.1. A Word About Names and objects
+# 9.2. Python Scopes and Namespaces
+# 9.2.1. Scopes and Namespaces Example
+def scope_test():
+    def do_local():
+        spam = "local spam"
+
+    def do_nonlocal():
+        nonlocal spam
+        spam = "nonlocal spam"
+
+    def do_global():
+        global spam
+        spam = "global spam"
+
+    spam = "test spam"
+    do_local()
+    print("After local assignment:", spam)
+    do_nonlocal()
+    print("After nonlocal assignment:", spam)
+    do_global()
+    print("After global assignment:", spam)
+
+scope_test()
+print("In global scope:", spam)
+
+# 9.3. A First Look at Classes
+# 9.3.1. Class Difinition Syntax
+# 9.3.2. Class objects
+class MyClass:
+    """A simple example class"""
+    i = 12345
+
+    def f(self):
+        return "hello world"
+
+x =  MyClass()
+
+class Complex:
+    def __init__(self, realpart, imagpart):
+        self.r = realpart
+        self.i = imagpart
+
+x = Complex(3.0, -4.5)
+x.r, x.i
