@@ -500,3 +500,74 @@ for cls in [B, C, D]:
         print("C")
     except B:
         print("B")
+
+# 8.4. Raise Exceptions
+raise NameError('HiThere')
+
+raise ValueError # shorthand for 'raise ValueError()'
+
+try:
+    raise NameError('HiThere')
+except NameError:
+    print('An exception flew by!')
+    raise
+
+# 8.5. User-defined Exceptions
+class Error(Exception):
+    """Base class for exceptions  in the modules"""
+    pass
+
+class InputError(Error):
+    """Exception raised for errors in the input
+
+    Attributes:
+        expression -- input expression in which the error occured
+        message -- explanation of the error
+    """
+
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
+
+class TransitionError(Error):
+    """Raised when operation attempts a state transition that's not
+    allowed
+
+    Attributes:
+        previous -- state a beginning of transition
+        next -- attempted new statement
+        message -- explanation of why the specific transition is not allowed
+    """
+
+    def __init__(self, previous, next, message):
+        self.previous = previous
+        self.next = next
+        self.message = message
+
+    8.9. Defining Clean-up Actions
+    try:
+        raise KeyboardInterrupt
+    finally:
+        print('Goodbye world!')
+
+def divide(x, y):
+    try:
+        result = x / y
+    except ZeroDivisionError:
+        print("devision by zero!")
+    else:
+        print("result is", result)
+    finally:
+        print("executing final clause")
+
+divide(2,1)
+divide(2,0)
+divide("2","1")
+
+#8.7. Predifined Clean-up Actions
+for line in open("myfile.txt"):
+    print(line, end="")
+
+with open("myfile.txt") as f:
+    for line in f:
+        print(line, end="")
