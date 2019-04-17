@@ -725,3 +725,66 @@ class MappingSubClass(Mapping):
         # but does not break __init__()
         for item in zip(key, values):
             self.items_list.append(item)
+
+# 9.7. Odds and Ends
+class Employee:
+    pass
+
+john = Employee()   # Create an empty employee record
+
+# Fill the fields of the record
+john.name = 'john Doe'
+john.dept = 'computer lab'
+john.salary = 1000
+
+# 9.8. Iterators
+for element in [1, 2, 3]:
+    print(element)
+for element in (1, 2, 3):
+    print(element)
+for key in {'one':1, 'two':2}:
+    print(key)
+for char in "123":
+    print(char)
+for line in open("myfile.txt"):
+    print(line, end='')
+
+
+s = 'abc'
+it = iter(s)
+it
+next(it)
+next(it)
+next(it)
+next(it)
+
+class Reverse:
+    """Iterator for looping over a sequence backwards."""
+    def __init__(self, data):
+        self.data = data
+        self.index = len(data)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index == 0:
+            raise StopIteration
+        self.index = self.index - 1
+        return self.data[self.index]
+
+rev = Reverse('spam')
+iter(rev)
+for char in rev:
+    print(char)
+
+# 9.9. Generators
+def reverse(data):
+    for index in range(len(data)-1, -1, -1):
+        yield data[index]
+
+for char in reverse('golf'):
+    print(char)
+
+# 9.10. Generator Expressions
+sum(i*i for i in range(10))
