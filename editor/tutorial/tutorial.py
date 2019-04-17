@@ -618,3 +618,110 @@ class Complex:
 
 x = Complex(3.0, -4.5)
 x.r, x.i
+
+# 9.3.3. Instance Objects
+
+x = MyClass()
+x.counter = 1
+while x.counter < 10:
+    x.counter = x.counter * 2
+print(x.counter)
+del x.counter
+
+# 9.3.4. Methos Objects
+x.f()
+xf = x.f
+while True:
+    print(xf())
+
+# 9.3.5. Class and Instance Variables
+class Dog:
+
+    kind = 'canine'         # class variable shared by all instance
+
+    def __init__(self, name):
+        self.name = name
+
+d = Dog("Fibo")
+e = Dog("Buddy")
+d.kind      # shared by all dogs
+e.kind      # shared by all dogs
+d.name      # unique to d
+e.name      # unique to e
+
+class Dog:
+    tricks = []             # mistaken use of a class variable
+
+    def __init__(self, trick):
+        self.trick = trick
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+d = Dog("Fibo")
+e = Dog("Buddy")
+d.add_trick('roll over')
+e.add_trick('play dead')
+d.tricks                   # unexpetedly shared by all dogs
+
+class Dog:
+    def __init__(self, trick):
+        self.trick = trick
+        self.tricks = []         # creates a new empty list for each dog
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+d = Dog("Fibo")
+e = Dog("Buddy")
+d.add_trick('roll over')
+e.add_trick('play dead')
+d.tricks
+e.tricks
+
+# 9.4. Random Remarks
+# Fuction defined outside the class
+def f1(self, x, y):
+    return min(x, x+y)
+
+class C:
+    f = f1
+
+    def g(self):
+        return 'hello world'
+
+    h = g
+
+class Bag:
+    def __init__(self):
+        self.data = []
+
+    def add(self, x):
+        self.data.append(x)
+
+    def addtwice(self, x):
+        self.add(x)
+        self.add(x)
+
+# 9.5. Inheritance
+# 9.5.1. Multiple Inheritance
+
+# 9.6. Private Variables
+class Mapping:
+    def __init__(self, iterable):
+        self.items_list = []
+        self.__update(iterable)
+
+    def update(self, iterable):
+        for item in iterable:
+            self.items_list.append(item)
+
+    __update = update       # private copy of original update() method
+
+class MappingSubClass(Mapping):
+
+    def update(self, key, values):
+        # provides new signature for update()
+        # but does not break __init__()
+        for item in zip(key, values):
+            self.items_list.append(item)
