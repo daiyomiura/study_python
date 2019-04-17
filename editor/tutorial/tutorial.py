@@ -788,3 +788,26 @@ for char in reverse('golf'):
 
 # 9.10. Generator Expressions
 sum(i*i for i in range(10))
+
+xvec = [10, 20, 30]
+yvec = [7, 5, 3]
+sum(x*y for x,y in zip(xvec, yvec))
+
+unique_words = set(word for line in page    for word in line.split())
+
+data = 'golf'
+list(data[i] for i in range(len(data)-1, -1, -1))
+
+# 10. Brief Tour of the Standard Library
+# 10.1 Operating System Interface
+import os
+os.getcwd()
+os.chdir('/server/accesslog')
+os.system('mkdir today')
+
+import os
+dir(os)
+
+help(os)
+import shutil
+shutil.copyfile('data.db', 'archive.db')
