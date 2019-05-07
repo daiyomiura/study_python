@@ -934,3 +934,74 @@ conv = locale.localeconv()   # get a mapping of conventions
 x = 1234567.8
 locale.format("%d", x, grouping=True)
 locale.format_string("%s%.*f", (conv['currency_symbol'],conv['frac_digits'], x), grouping=True)
+
+# 11.2. Templating
+from string import Template
+t = Template('${village}folk send $$10 to $cause.')
+t.substitute(village='Nottingham', cause='the ditch fund')
+t = Template('Return the $item to $owner.')
+d = dict(item='unladen swallow')
+t.substitute(d)
+
+import time, os.path
+photofiles = ['img_1074.jpg', 'img_1076.jpg', 'img_1077.jpg']
+class BatchRename(Template):
+    delimiter = '%'
+
+fmt = input('Enter rename style (%d-date %n-seqnum %f-format): ')
+
+t = BatchRename(fmt)
+date = time.strftime('%d%b%y')
+for i, filename in enumerate(photofiles):
+    base, ext = os.path.splitext(filename)
+    newname = t.substitute(d=date, n=i, f=ext)
+    print('{0} --> {1}'.format(filename, newname))
+
+11.3.Working with Binary Data Record Layouts
+import struct
+
+with open('myfile.zip', 'rb') as f:
+    data = f.read()
+start = 0
+for i in range(3):                      # show the first 3 file headers
+    start += 14
+    fields = struct.unpack('<IIIHH', data[start:start+16])
+    crc32, comp_size, uncomp_size, filenamesize, extra_size = fields
+
+    start += 16
+    filename = data[start:start+filenamesize]
+    start += filenamesize
+    extra = data[start:start+extra_size]
+    print(filename, hex(crc32), comp_size, uncomp_size)
+
+    start += extra_size + comp_size     # skip to the next header
+
+# 11.4. Multi-threading
+import threading, zipfile
+
+class AsyncZip(threading.Thread):
+    def __init__(self, infile, outfile):
+        threading.Thread.__init__(self)
+        self.infile = infile
+        self.outfile = outfile
+
+    def run(self):
+        f = zipfile.ZipFile(self.outfile, 'w', zipfile.ZIP_DEFLATED)
+        f.write(self.infile)
+        f.close()
+        print('Finished backgroud zip of:', self.infile)
+
+background = AsyncZip('fibo.py', 'fiboarchive.zip')
+background.start()
+print('the main program continues to run in foreground')
+
+background.join()
+print('Main program waited until background was done.')
+
+# 11.5. Logging
+import logging
+logging.debug('Debugging information')
+logging.info('Informational message')
+logging.warning('Warning:config file %s not found', 'server.conf')
+logging.error('Error occurred')
+logging.critical('Critical error -- shtting down')
