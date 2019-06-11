@@ -1045,3 +1045,22 @@ data = [1,3,5,7,9,4,6,8,0]
 heapify(data)                   # rearrange the list info heap order
 heappush(data, -5)
 [heappop(data) for i in range(3)]
+
+# 11.8. Decimal Floating Point Arithmetic
+from decimal import *
+round(Decimal('0.70') * Decimal('1.05'), 2)
+round(.70 * 1.05, 2)
+
+Decimal('1.00') % Decimal('.10')
+
+1.00 % 0.10
+
+sum([Decimal('0.1')*10]) == Decimal('1.0')
+sum([0.1]*10) == 1.0
+
+getcontext().prec = 36
+Decimal(1) / Decimal(7)
+# 12. Virtual Environments and Packages
+# 12.1. Introduction
+# 12.2. Creating Virtual Environments
+# 12.3. Managing Packages with pip
