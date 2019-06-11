@@ -1005,3 +1005,21 @@ logging.info('Informational message')
 logging.warning('Warning:config file %s not found', 'server.conf')
 logging.error('Error occurred')
 logging.critical('Critical error -- shtting down')
+
+# 11.6. Weak References
+import weakref, gc
+class A:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return str(self.value)
+
+a = A(10)               # create reference
+d = weakref.WeakValueDictionary()
+d['primary'] = a        # dose not create a reference
+d['primary']            # fetch the object if it is still alive
+
+del a                   # remove the one reference
+gc.collect()            # run garbage collection right away
+
+d['primary']            # entry was automatically removed
